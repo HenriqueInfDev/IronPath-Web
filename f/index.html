@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IronPath – Workout program</title>
+<meta name="robots" content="noindex">
+<style>
+  :root { --bg:#0e0f12; --card:#191b20; --text:#ecedef; --muted:#a6abb4; --brand:#ff6b2c; }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+         background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; padding:16px; }
+  main { width:100%; max-width:420px; background:var(--card); border-radius:22px; padding:28px 24px; text-align:center; }
+  .logo { width:72px; height:72px; border-radius:20px; margin:0 auto 16px; display:flex; align-items:center; justify-content:center;
+          background:linear-gradient(135deg,#ff8a3d,#e0400e); font-size:36px; }
+  h1 { font-size:22px; margin:0 0 8px; }
+  p { color:var(--muted); line-height:1.5; margin:0 0 20px; }
+  a.btn { display:block; padding:15px; border-radius:14px; font-weight:600; text-decoration:none; margin-top:12px; }
+  .primary { background:var(--brand); color:#fff; }
+  .secondary { border:1px solid #3a3e46; color:var(--text); }
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+<main>
+  <div class="logo">🏋️</div>
+  <h1 id="title"></h1>
+  <p id="text"></p>
+  <a id="open" class="btn primary" href="#"></a>
+  <a id="store" class="btn secondary" href="https://play.google.com/store/apps/details?id=io.github.henriqueinfdev.ironpath"></a>
+</main>
+<script>
+  // A ficha vai inteira depois do "#": o navegador não envia essa parte para nenhum servidor.
+  var lang = (navigator.language || "en").slice(0, 2);
+  var all = {
+    en: { title: "Workout program for you", text: "Someone shared an IronPath workout program with you. Open it in the app to save it.",
+          open: "Open in IronPath", store: "Get IronPath on Google Play", bad: "This link is incomplete. Ask for the link again.",
+          other: "IronPath is available for Android. Open this link on your Android phone." },
+    pt: { title: "Ficha de treino para você", text: "Compartilharam com você uma ficha de treino do IronPath. Abra no app para salvar.",
+          open: "Abrir no IronPath", store: "Baixar o IronPath na Google Play", bad: "Este link está incompleto. Peça o link de novo.",
+          other: "O IronPath é para Android. Abra este link no seu celular Android." },
+    es: { title: "Rutina de entrenamiento para ti", text: "Te compartieron una rutina de IronPath. Ábrela en la app para guardarla.",
+          open: "Abrir en IronPath", store: "Descargar IronPath en Google Play", bad: "Este enlace está incompleto. Pide el enlace otra vez.",
+          other: "IronPath es para Android. Abre este enlace en tu teléfono Android." }
+  };
+  var t = all[lang] || all.en;
+  var code = (location.hash || "").replace(/^#/, "").replace(/[^A-Za-z0-9_-]/g, "");
+  var store = "https://play.google.com/store/apps/details?id=io.github.henriqueinfdev.ironpath";
+  var android = /android/i.test(navigator.userAgent);
+  document.getElementById("title").textContent = t.title;
+  document.getElementById("store").textContent = t.store;
+  var open = document.getElementById("open");
+  open.textContent = t.open;
+  if (code.length < 16) {
+    document.getElementById("text").textContent = t.bad;
+    open.classList.add("hidden");
+  } else if (!android) {
+    document.getElementById("text").textContent = t.other;
+    open.classList.add("hidden");
+  } else {
+    document.getElementById("text").textContent = t.text;
+    var intent = "intent://f/" + code + "#Intent;scheme=ironpath;package=io.github.henriqueinfdev.ironpath;S.browser_fallback_url=" +
+      encodeURIComponent(store) + ";end";
+    open.href = intent;
+    setTimeout(function () { location.href = intent; }, 300);
+  }
+</script>
+</body>
+</html>
