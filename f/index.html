@@ -27,7 +27,7 @@
   <h1 id="title"></h1>
   <p id="text"></p>
   <a id="open" class="btn primary" href="#"></a>
-  <a id="store" class="btn secondary" href="https://play.google.com/store/apps/details?id=io.github.henriqueinfdev.ironpath"></a>
+  <a id="store" class="btn secondary" href="https://play.google.com/store/apps/details?id=apps.henrcxs.ironpath"></a>
 </main>
 <script>
   // A ficha vai inteira depois do "#": o navegador não envia essa parte para nenhum servidor.
@@ -45,7 +45,7 @@
   };
   var t = all[lang] || all.en;
   var code = (location.hash || "").replace(/^#/, "").replace(/[^A-Za-z0-9_-]/g, "");
-  var store = "https://play.google.com/store/apps/details?id=io.github.henriqueinfdev.ironpath";
+  var store = "https://play.google.com/store/apps/details?id=apps.henrcxs.ironpath";
   var android = /android/i.test(navigator.userAgent);
   document.getElementById("title").textContent = t.title;
   document.getElementById("store").textContent = t.store;
@@ -59,7 +59,7 @@
     open.classList.add("hidden");
   } else {
     document.getElementById("text").textContent = t.text;
-    var intent = "intent://f/" + code + "#Intent;scheme=ironpath;package=io.github.henriqueinfdev.ironpath;S.browser_fallback_url=" +
+    var intent = "intent://f/" + code + "#Intent;scheme=ironpath;package=apps.henrcxs.ironpath;S.browser_fallback_url=" +
       encodeURIComponent(store) + ";end";
     open.href = intent;
     setTimeout(function () { location.href = intent; }, 300);
